@@ -1,0 +1,594 @@
+[
+  {
+    "target_name": "footprints-default-frdm_k64f",
+    "build_cmd": "west build -p -b frdm_k64f tests/benchmarks/footprints -d build/footprints-default-frdm_k64f",
+    "elf": "build/footprints-default-frdm_k64f/zephyr/zephyr.elf",
+    "ld": "build/footprints-default-frdm_k64f/zephyr/linker.cmd",
+    "initial_commit": "98fb6e5f22549dc0bb3d71556fef47504a91e64f",
+    "repo_dirs": [
+      "tests/benchmarks/footprints",
+      "boards/nxp/frdm_k64f",
+      "soc/nxp/kinetis",
+      "arch/arm",
+      "kernel",
+      "include",
+      "lib",
+      "cmake",
+      "dts",
+      "drivers"
+    ]
+  },
+  {
+    "target_name": "footprints-userspace-frdm_k64f",
+    "build_cmd": "west build -p -b frdm_k64f tests/benchmarks/footprints -d build/footprints-userspace-frdm_k64f -- -DCONF_FILE=prj_userspace.conf",
+    "elf": "build/footprints-userspace-frdm_k64f/zephyr/zephyr.elf",
+    "ld": "build/footprints-userspace-frdm_k64f/zephyr/linker.cmd",
+    "initial_commit": "98fb6e5f22549dc0bb3d71556fef47504a91e64f",
+    "repo_dirs": [
+      "tests/benchmarks/footprints",
+      "boards/nxp/frdm_k64f",
+      "soc/nxp/kinetis",
+      "arch/arm",
+      "kernel",
+      "include",
+      "lib",
+      "cmake",
+      "dts",
+      "drivers"
+    ]
+  },
+  {
+    "target_name": "footprints-default-disco_l475_iot1",
+    "build_cmd": "west build -p -b disco_l475_iot1 tests/benchmarks/footprints -d build/footprints-default-disco_l475_iot1",
+    "elf": "build/footprints-default-disco_l475_iot1/zephyr/zephyr.elf",
+    "ld": "build/footprints-default-disco_l475_iot1/zephyr/linker.cmd",
+    "initial_commit": "98fb6e5f22549dc0bb3d71556fef47504a91e64f",
+    "repo_dirs": [
+      "tests/benchmarks/footprints",
+      "boards/st/disco_l475_iot1",
+      "soc/st/stm32",
+      "arch/arm",
+      "kernel",
+      "include",
+      "lib",
+      "cmake",
+      "dts",
+      "drivers"
+    ]
+  },
+  {
+    "target_name": "footprints-userspace-disco_l475_iot1",
+    "build_cmd": "west build -p -b disco_l475_iot1 tests/benchmarks/footprints -d build/footprints-userspace-disco_l475_iot1 -- -DCONF_FILE=prj_userspace.conf",
+    "elf": "build/footprints-userspace-disco_l475_iot1/zephyr/zephyr.elf",
+    "ld": "build/footprints-userspace-disco_l475_iot1/zephyr/linker.cmd",
+    "initial_commit": "98fb6e5f22549dc0bb3d71556fef47504a91e64f",
+    "repo_dirs": [
+      "tests/benchmarks/footprints",
+      "boards/st/disco_l475_iot1",
+      "soc/st/stm32",
+      "arch/arm",
+      "kernel",
+      "include",
+      "lib",
+      "cmake",
+      "dts",
+      "drivers"
+    ]
+  },
+  {
+    "target_name": "footprints-default-nrf5340dk_nrf5340_cpuapp",
+    "build_cmd": "west build -p -b nrf5340dk/nrf5340/cpuapp tests/benchmarks/footprints -d build/footprints-default-nrf5340dk_nrf5340_cpuapp",
+    "elf": "build/footprints-default-nrf5340dk_nrf5340_cpuapp/zephyr/zephyr.elf",
+    "ld": "build/footprints-default-nrf5340dk_nrf5340_cpuapp/zephyr/linker.cmd",
+    "initial_commit": "98fb6e5f22549dc0bb3d71556fef47504a91e64f",
+    "repo_dirs": [
+      "tests/benchmarks/footprints",
+      "boards/nordic/nrf5340dk",
+      "soc/nordic/nrf53",
+      "soc/nordic/common",
+      "arch/arm",
+      "kernel",
+      "include",
+      "lib",
+      "cmake",
+      "dts",
+      "drivers"
+    ]
+  },
+  {
+    "target_name": "footprints-default-nrf51dk_nrf51822",
+    "build_cmd": "west build -p -b nrf51dk/nrf51822 tests/benchmarks/footprints -d build/footprints-default-nrf51dk_nrf51822",
+    "elf": "build/footprints-default-nrf51dk_nrf51822/zephyr/zephyr.elf",
+    "ld": "build/footprints-default-nrf51dk_nrf51822/zephyr/linker.cmd",
+    "initial_commit": "98fb6e5f22549dc0bb3d71556fef47504a91e64f",
+    "repo_dirs": [
+      "tests/benchmarks/footprints",
+      "boards/nordic/nrf51dk",
+      "soc/nordic/nrf51",
+      "soc/nordic/common",
+      "arch/arm",
+      "kernel",
+      "include",
+      "lib",
+      "cmake",
+      "dts",
+      "drivers"
+    ]
+  },
+  {
+    "target_name": "footprints-default-hifive1_revb",
+    "build_cmd": "west build -p -b hifive1_revb tests/benchmarks/footprints -d build/footprints-default-hifive1_revb",
+    "elf": "build/footprints-default-hifive1_revb/zephyr/zephyr.elf",
+    "ld": "build/footprints-default-hifive1_revb/zephyr/linker.cmd",
+    "initial_commit": "98fb6e5f22549dc0bb3d71556fef47504a91e64f",
+    "repo_dirs": [
+      "tests/benchmarks/footprints",
+      "boards/sifive/hifive1",
+      "soc/sifive/sifive_freedom",
+      "arch/riscv",
+      "kernel",
+      "include",
+      "lib",
+      "cmake",
+      "dts",
+      "drivers"
+    ]
+  },
+  {
+    "target_name": "footprints-default-intel_ehl_crb",
+    "build_cmd": "west build -p -b intel_ehl_crb tests/benchmarks/footprints -d build/footprints-default-intel_ehl_crb",
+    "elf": "build/footprints-default-intel_ehl_crb/zephyr/zephyr.elf",
+    "ld": "build/footprints-default-intel_ehl_crb/zephyr/linker.cmd",
+    "initial_commit": "7c70032d1f9c37fbfe5b9949a46adf2cce829562",
+    "repo_dirs": [
+      "tests/benchmarks/footprints",
+      "boards/intel/ehl",
+      "soc/intel/elkhart_lake",
+      "arch/x86",
+      "kernel",
+      "include",
+      "lib",
+      "cmake",
+      "dts",
+      "drivers"
+    ]
+  },
+  {
+    "target_name": "footprints-userspace-intel_ehl_crb",
+    "build_cmd": "west build -p -b intel_ehl_crb tests/benchmarks/footprints -d build/footprints-userspace-intel_ehl_crb -- -DCONF_FILE=prj_userspace.conf",
+    "elf": "build/footprints-userspace-intel_ehl_crb/zephyr/zephyr.elf",
+    "ld": "build/footprints-userspace-intel_ehl_crb/zephyr/linker.cmd",
+    "initial_commit": "7c70032d1f9c37fbfe5b9949a46adf2cce829562",
+    "repo_dirs": [
+      "tests/benchmarks/footprints",
+      "boards/intel/ehl",
+      "soc/intel/elkhart_lake",
+      "arch/x86",
+      "kernel",
+      "include",
+      "lib",
+      "cmake",
+      "dts",
+      "drivers"
+    ]
+  },
+  {
+    "target_name": "footprints-power-management-frdm_k64f",
+    "build_cmd": "west build -p -b frdm_k64f tests/benchmarks/footprints -d build/footprints-power-management-frdm_k64f -- -DCONF_FILE=prj_pm.conf",
+    "elf": "build/footprints-power-management-frdm_k64f/zephyr/zephyr.elf",
+    "ld": "build/footprints-power-management-frdm_k64f/zephyr/linker.cmd",
+    "initial_commit": "98fb6e5f22549dc0bb3d71556fef47504a91e64f",
+    "repo_dirs": [
+      "tests/benchmarks/footprints",
+      "boards/nxp/frdm_k64f",
+      "soc/nxp/kinetis",
+      "arch/arm",
+      "subsys/pm",
+      "kernel",
+      "include",
+      "lib",
+      "cmake",
+      "dts",
+      "drivers"
+    ]
+  },
+  {
+    "target_name": "footprints-power-management-disco_l475_iot1",
+    "build_cmd": "west build -p -b disco_l475_iot1 tests/benchmarks/footprints -d build/footprints-power-management-disco_l475_iot1 -- -DCONF_FILE=prj_pm.conf",
+    "elf": "build/footprints-power-management-disco_l475_iot1/zephyr/zephyr.elf",
+    "ld": "build/footprints-power-management-disco_l475_iot1/zephyr/linker.cmd",
+    "initial_commit": "98fb6e5f22549dc0bb3d71556fef47504a91e64f",
+    "repo_dirs": [
+      "tests/benchmarks/footprints",
+      "boards/st/disco_l475_iot1",
+      "soc/st/stm32",
+      "arch/arm",
+      "subsys/pm",
+      "kernel",
+      "include",
+      "lib",
+      "cmake",
+      "dts",
+      "drivers"
+    ]
+  },
+  {
+    "target_name": "footprints-power-management-it8xxx2_evb",
+    "build_cmd": "west build -p -b it8xxx2_evb tests/benchmarks/footprints -d build/footprints-power-management-it8xxx2_evb -- -DCONF_FILE=prj_pm.conf",
+    "elf": "build/footprints-power-management-it8xxx2_evb/zephyr/zephyr.elf",
+    "ld": "build/footprints-power-management-it8xxx2_evb/zephyr/linker.cmd",
+    "initial_commit": "968dd2107bb33351877e88f9fe33dcbad1134a6c",
+    "repo_dirs": [
+      "tests/benchmarks/footprints",
+      "boards/ite/it8xxx2_evb",
+      "soc/ite/ec/it8xxx2",
+      "arch/riscv",
+      "subsys/pm",
+      "kernel",
+      "include",
+      "lib",
+      "cmake",
+      "dts",
+      "drivers"
+    ]
+  },
+  {
+    "target_name": "footprints-power-management-iotdk",
+    "build_cmd": "west build -p -b iotdk tests/benchmarks/footprints -d build/footprints-power-management-iotdk -- -DCONF_FILE=prj_pm.conf",
+    "elf": "build/footprints-power-management-iotdk/zephyr/zephyr.elf",
+    "ld": "build/footprints-power-management-iotdk/zephyr/linker.cmd",
+    "initial_commit": "98fb6e5f22549dc0bb3d71556fef47504a91e64f",
+    "repo_dirs": [
+      "tests/benchmarks/footprints",
+      "boards/snps/iotdk",
+      "soc/snps/arc_iot",
+      "arch/arc",
+      "subsys/pm",
+      "kernel",
+      "include",
+      "lib",
+      "cmake",
+      "dts",
+      "drivers"
+    ]
+  },
+  {
+    "target_name": "echo_client-default-frdm_k64f",
+    "build_cmd": "west build -p -b frdm_k64f samples/net/sockets/echo_client -d build/echo_client-default-frdm_k64f",
+    "elf": "build/echo_client-default-frdm_k64f/zephyr/zephyr.elf",
+    "ld": "build/echo_client-default-frdm_k64f/zephyr/linker.cmd",
+    "initial_commit": "f01b81731bd92c9ee96a7f001790e0669a71eb01",
+    "repo_dirs": [
+      "samples/net/sockets/echo_client",
+      "boards/nxp/frdm_k64f",
+      "soc/nxp/kinetis",
+      "arch/arm",
+      "subsys/net",
+      "drivers/ethernet",
+      "kernel",
+      "include",
+      "lib",
+      "cmake",
+      "dts",
+      "drivers"
+    ]
+  },
+  {
+    "target_name": "echo_server-default-frdm_k64f",
+    "build_cmd": "west build -p -b frdm_k64f samples/net/sockets/echo_server -d build/echo_server-default-frdm_k64f",
+    "elf": "build/echo_server-default-frdm_k64f/zephyr/zephyr.elf",
+    "ld": "build/echo_server-default-frdm_k64f/zephyr/linker.cmd",
+    "initial_commit": "b813502077627ee0a7ee7402aadcb6dbf549fe18",
+    "repo_dirs": [
+      "samples/net/sockets/echo_server",
+      "boards/nxp/frdm_k64f",
+      "soc/nxp/kinetis",
+      "arch/arm",
+      "subsys/net",
+      "drivers/ethernet",
+      "kernel",
+      "include",
+      "lib",
+      "cmake",
+      "dts",
+      "drivers"
+    ]
+  },
+  {
+    "target_name": "bt_beacon-default-nrf52840dk_nrf52840",
+    "build_cmd": "west build -p -b nrf52840dk/nrf52840 samples/bluetooth/beacon -d build/bt_beacon-default-nrf52840dk_nrf52840",
+    "elf": "build/bt_beacon-default-nrf52840dk_nrf52840/zephyr/zephyr.elf",
+    "ld": "build/bt_beacon-default-nrf52840dk_nrf52840/zephyr/linker.cmd",
+    "initial_commit": "429bea5381929a51fd526b5a5d5b31dccd2f5dd7",
+    "repo_dirs": [
+      "samples/bluetooth/beacon",
+      "boards/nordic/nrf52840dk",
+      "soc/nordic/nrf52",
+      "soc/nordic/common",
+      "arch/arm",
+      "subsys/bluetooth",
+      "kernel",
+      "include",
+      "lib",
+      "cmake",
+      "dts",
+      "drivers"
+    ]
+  },
+  {
+    "target_name": "bt_peripheral-default-nrf52840dk_nrf52840",
+    "build_cmd": "west build -p -b nrf52840dk/nrf52840 samples/bluetooth/peripheral -d build/bt_peripheral-default-nrf52840dk_nrf52840",
+    "elf": "build/bt_peripheral-default-nrf52840dk_nrf52840/zephyr/zephyr.elf",
+    "ld": "build/bt_peripheral-default-nrf52840dk_nrf52840/zephyr/linker.cmd",
+    "initial_commit": "429bea5381929a51fd526b5a5d5b31dccd2f5dd7",
+    "repo_dirs": [
+      "samples/bluetooth/peripheral",
+      "boards/nordic/nrf52840dk",
+      "soc/nordic/nrf52",
+      "soc/nordic/common",
+      "arch/arm",
+      "subsys/bluetooth",
+      "kernel",
+      "include",
+      "lib",
+      "cmake",
+      "dts",
+      "drivers"
+    ]
+  },
+  {
+    "target_name": "bt_central_hr-default-nrf52840dk_nrf52840",
+    "build_cmd": "west build -p -b nrf52840dk/nrf52840 samples/bluetooth/central_hr -d build/bt_central_hr-default-nrf52840dk_nrf52840",
+    "elf": "build/bt_central_hr-default-nrf52840dk_nrf52840/zephyr/zephyr.elf",
+    "ld": "build/bt_central_hr-default-nrf52840dk_nrf52840/zephyr/linker.cmd",
+    "initial_commit": "429bea5381929a51fd526b5a5d5b31dccd2f5dd7",
+    "repo_dirs": [
+      "samples/bluetooth/central_hr",
+      "boards/nordic/nrf52840dk",
+      "soc/nordic/nrf52",
+      "soc/nordic/common",
+      "arch/arm",
+      "subsys/bluetooth",
+      "kernel",
+      "include",
+      "lib",
+      "cmake",
+      "dts",
+      "drivers"
+    ]
+  },
+  {
+    "target_name": "bt_mesh_demo-default-bbc_microbit",
+    "build_cmd": "west build -p -b bbc_microbit samples/bluetooth/mesh_demo -d build/bt_mesh_demo-default-bbc_microbit",
+    "elf": "build/bt_mesh_demo-default-bbc_microbit/zephyr/zephyr.elf",
+    "ld": "build/bt_mesh_demo-default-bbc_microbit/zephyr/linker.cmd",
+    "initial_commit": "0ec26308825dffb220e75ad4a0a5c9b014dd0c3f",
+    "repo_dirs": [
+      "samples/bluetooth/mesh_demo",
+      "boards/bbc/microbit",
+      "soc/nordic/nrf51",
+      "soc/nordic/common",
+      "arch/arm",
+      "subsys/bluetooth",
+      "kernel",
+      "include",
+      "lib",
+      "cmake",
+      "dts",
+      "drivers"
+    ]
+  },
+  {
+    "target_name": "bt_hap_ha-default-nrf5340dk_nrf5340_cpuapp",
+    "build_cmd": "west build -p -b nrf5340dk/nrf5340/cpuapp samples/bluetooth/hap_ha -d build/bt_hap_ha-default-nrf5340dk_nrf5340_cpuapp",
+    "elf": "build/bt_hap_ha-default-nrf5340dk_nrf5340_cpuapp/zephyr/zephyr.elf",
+    "ld": "build/bt_hap_ha-default-nrf5340dk_nrf5340_cpuapp/zephyr/linker.cmd",
+    "initial_commit": "acb9da2ba093e66e4b7049ff57d14fe2c309da54",
+    "repo_dirs": [
+      "samples/bluetooth/hap_ha",
+      "boards/nordic/nrf5340dk",
+      "soc/nordic/nrf53",
+      "soc/nordic/common",
+      "arch/arm",
+      "subsys/bluetooth",
+      "kernel",
+      "include",
+      "lib",
+      "cmake",
+      "dts",
+      "drivers"
+    ]
+  },
+  {
+    "target_name": "bt_bap_unicast_client-default-nrf5340dk_nrf5340_cpuapp",
+    "build_cmd": "west build -p -b nrf5340dk/nrf5340/cpuapp samples/bluetooth/bap_unicast_client -d build/bt_bap_unicast_client-default-nrf5340dk_nrf5340_cpuapp",
+    "elf": "build/bt_bap_unicast_client-default-nrf5340dk_nrf5340_cpuapp/zephyr/zephyr.elf",
+    "ld": "build/bt_bap_unicast_client-default-nrf5340dk_nrf5340_cpuapp/zephyr/linker.cmd",
+    "initial_commit": "1bcc3d8efa111616aff636af5bf2ae50d3fa28a7",
+    "repo_dirs": [
+      "samples/bluetooth/bap_unicast_client",
+      "boards/nordic/nrf5340dk",
+      "soc/nordic/nrf53",
+      "soc/nordic/common",
+      "arch/arm",
+      "subsys/bluetooth",
+      "kernel",
+      "include",
+      "lib",
+      "cmake",
+      "dts",
+      "drivers"
+    ]
+  },
+  {
+    "target_name": "bt_bap_unicast_server-default-nrf5340dk_nrf5340_cpuapp",
+    "build_cmd": "west build -p -b nrf5340dk/nrf5340/cpuapp samples/bluetooth/bap_unicast_server -d build/bt_bap_unicast_server-default-nrf5340dk_nrf5340_cpuapp",
+    "elf": "build/bt_bap_unicast_server-default-nrf5340dk_nrf5340_cpuapp/zephyr/zephyr.elf",
+    "ld": "build/bt_bap_unicast_server-default-nrf5340dk_nrf5340_cpuapp/zephyr/linker.cmd",
+    "initial_commit": "1bcc3d8efa111616aff636af5bf2ae50d3fa28a7",
+    "repo_dirs": [
+      "samples/bluetooth/bap_unicast_server",
+      "boards/nordic/nrf5340dk",
+      "soc/nordic/nrf53",
+      "soc/nordic/common",
+      "arch/arm",
+      "subsys/bluetooth",
+      "kernel",
+      "include",
+      "lib",
+      "cmake",
+      "dts",
+      "drivers"
+    ]
+  },
+  {
+    "target_name": "bt_tmap_central-default-nrf5340dk_nrf5340_cpuapp",
+    "build_cmd": "west build -p -b nrf5340dk/nrf5340/cpuapp samples/bluetooth/tmap_central -d build/bt_tmap_central-default-nrf5340dk_nrf5340_cpuapp",
+    "elf": "build/bt_tmap_central-default-nrf5340dk_nrf5340_cpuapp/zephyr/zephyr.elf",
+    "ld": "build/bt_tmap_central-default-nrf5340dk_nrf5340_cpuapp/zephyr/linker.cmd",
+    "initial_commit": "5096aa1c00db6bf83022b20836f6534d7a521145",
+    "repo_dirs": [
+      "samples/bluetooth/tmap_central",
+      "boards/nordic/nrf5340dk",
+      "soc/nordic/nrf53",
+      "soc/nordic/common",
+      "arch/arm",
+      "subsys/bluetooth",
+      "kernel",
+      "include",
+      "lib",
+      "cmake",
+      "dts",
+      "drivers"
+    ]
+  },
+  {
+    "target_name": "bt_tmap_peripheral-default-nrf5340dk_nrf5340_cpuapp",
+    "build_cmd": "west build -p -b nrf5340dk/nrf5340/cpuapp samples/bluetooth/tmap_peripheral -d build/bt_tmap_peripheral-default-nrf5340dk_nrf5340_cpuapp",
+    "elf": "build/bt_tmap_peripheral-default-nrf5340dk_nrf5340_cpuapp/zephyr/zephyr.elf",
+    "ld": "build/bt_tmap_peripheral-default-nrf5340dk_nrf5340_cpuapp/zephyr/linker.cmd",
+    "initial_commit": "5096aa1c00db6bf83022b20836f6534d7a521145",
+    "repo_dirs": [
+      "samples/bluetooth/tmap_peripheral",
+      "boards/nordic/nrf5340dk",
+      "soc/nordic/nrf53",
+      "soc/nordic/common",
+      "arch/arm",
+      "subsys/bluetooth",
+      "kernel",
+      "include",
+      "lib",
+      "cmake",
+      "dts",
+      "drivers"
+    ]
+  },
+  {
+    "target_name": "bt_tmap_bms-default-nrf5340dk_nrf5340_cpuapp",
+    "build_cmd": "west build -p -b nrf5340dk/nrf5340/cpuapp samples/bluetooth/tmap_bms -d build/bt_tmap_bms-default-nrf5340dk_nrf5340_cpuapp",
+    "elf": "build/bt_tmap_bms-default-nrf5340dk_nrf5340_cpuapp/zephyr/zephyr.elf",
+    "ld": "build/bt_tmap_bms-default-nrf5340dk_nrf5340_cpuapp/zephyr/linker.cmd",
+    "initial_commit": "f3aaf334226ab201b318c5ee0d0a6f7a9e658397",
+    "repo_dirs": [
+      "samples/bluetooth/tmap_bms",
+      "boards/nordic/nrf5340dk",
+      "soc/nordic/nrf53",
+      "soc/nordic/common",
+      "arch/arm",
+      "subsys/bluetooth",
+      "kernel",
+      "include",
+      "lib",
+      "cmake",
+      "dts",
+      "drivers"
+    ]
+  },
+  {
+    "target_name": "bt_tmap_bmr-default-nrf5340dk_nrf5340_cpuapp",
+    "build_cmd": "west build -p -b nrf5340dk/nrf5340/cpuapp samples/bluetooth/tmap_bmr -d build/bt_tmap_bmr-default-nrf5340dk_nrf5340_cpuapp",
+    "elf": "build/bt_tmap_bmr-default-nrf5340dk_nrf5340_cpuapp/zephyr/zephyr.elf",
+    "ld": "build/bt_tmap_bmr-default-nrf5340dk_nrf5340_cpuapp/zephyr/linker.cmd",
+    "initial_commit": "f3aaf334226ab201b318c5ee0d0a6f7a9e658397",
+    "repo_dirs": [
+      "samples/bluetooth/tmap_bmr",
+      "boards/nordic/nrf5340dk",
+      "soc/nordic/nrf53",
+      "soc/nordic/common",
+      "arch/arm",
+      "subsys/bluetooth",
+      "kernel",
+      "include",
+      "lib",
+      "cmake",
+      "dts",
+      "drivers"
+    ]
+  },
+  {
+    "target_name": "bt_hci_ipc-default-nrf5340dk_nrf5340_cpunet",
+    "build_cmd": "west build -p -b nrf5340dk/nrf5340/cpunet samples/bluetooth/hci_ipc -d build/bt_hci_ipc-default-nrf5340dk_nrf5340_cpunet",
+    "elf": "build/bt_hci_ipc-default-nrf5340dk_nrf5340_cpunet/zephyr/zephyr.elf",
+    "ld": "build/bt_hci_ipc-default-nrf5340dk_nrf5340_cpunet/zephyr/linker.cmd",
+    "initial_commit": "9cf07bbdb55f4264062297d2bee00779c7627604",
+    "repo_dirs": [
+      "samples/bluetooth/hci_ipc",
+      "boards/nordic/nrf5340dk",
+      "soc/nordic/nrf53",
+      "soc/nordic/common",
+      "arch/arm",
+      "subsys/bluetooth",
+      "subsys/ipc",
+      "kernel",
+      "include",
+      "lib",
+      "cmake",
+      "dts",
+      "drivers"
+    ]
+  },
+  {
+    "target_name": "bt_hci_ipc-iso-broadcast-nrf5340dk_nrf5340_cpunet",
+    "build_cmd": "west build -p -b nrf5340dk/nrf5340/cpunet samples/bluetooth/hci_ipc -d build/bt_hci_ipc-iso-broadcast-nrf5340dk_nrf5340_cpunet -- -DCONF_FILE=nrf5340_cpunet_iso_broadcast-bt_ll_sw_split.conf",
+    "elf": "build/bt_hci_ipc-iso-broadcast-nrf5340dk_nrf5340_cpunet/zephyr/zephyr.elf",
+    "ld": "build/bt_hci_ipc-iso-broadcast-nrf5340dk_nrf5340_cpunet/zephyr/linker.cmd",
+    "initial_commit": "9cf07bbdb55f4264062297d2bee00779c7627604",
+    "repo_dirs": [
+      "samples/bluetooth/hci_ipc",
+      "boards/nordic/nrf5340dk",
+      "soc/nordic/nrf53",
+      "soc/nordic/common",
+      "arch/arm",
+      "subsys/bluetooth",
+      "subsys/ipc",
+      "kernel",
+      "include",
+      "lib",
+      "cmake",
+      "dts",
+      "drivers"
+    ]
+  },
+  {
+    "target_name": "bt_hci_ipc-iso-receive-nrf5340dk_nrf5340_cpunet",
+    "build_cmd": "west build -p -b nrf5340dk/nrf5340/cpunet samples/bluetooth/hci_ipc -d build/bt_hci_ipc-iso-receive-nrf5340dk_nrf5340_cpunet -- -DCONF_FILE=nrf5340_cpunet_iso_receive-bt_ll_sw_split.conf",
+    "elf": "build/bt_hci_ipc-iso-receive-nrf5340dk_nrf5340_cpunet/zephyr/zephyr.elf",
+    "ld": "build/bt_hci_ipc-iso-receive-nrf5340dk_nrf5340_cpunet/zephyr/linker.cmd",
+    "initial_commit": "9cf07bbdb55f4264062297d2bee00779c7627604",
+    "repo_dirs": [
+      "samples/bluetooth/hci_ipc",
+      "boards/nordic/nrf5340dk",
+      "soc/nordic/nrf53",
+      "soc/nordic/common",
+      "arch/arm",
+      "subsys/bluetooth",
+      "subsys/ipc",
+      "kernel",
+      "include",
+      "lib",
+      "cmake",
+      "dts",
+      "drivers"
+    ]
+  }
+]

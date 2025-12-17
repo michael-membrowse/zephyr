@@ -1,0 +1,8 @@
+[
+  {
+    "target_name": "footprints-default-frdm_k64f",
+    "build_cmd": "west build -p -b frdm_k64f tests/benchmarks/footprints -d build/footprints-default-frdm_k64f",
+    "elf": "build/footprints-default-frdm_k64f/zephyr/zephyr.elf",
+    "ld": "build/footprints-default-frdm_k64f/zephyr/linker.cmd"
+  }
+]

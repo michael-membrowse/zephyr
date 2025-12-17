@@ -1,0 +1,167 @@
+name: Onboard to Membrowse
+
+on:
+  workflow_dispatch:
+    inputs:
+      num_commits:
+        description: 'Number of commits to process'
+        required: false
+        default: ''
+        type: string
+      commits:
+        description: 'Space-separated list of commit hashes and/or tags to process (mutually exclusive with num_commits)'
+        required: false
+        default: ''
+        type: string
+      commit_offset:
+        description: 'Number of commits to go back from HEAD before starting onboarding'
+        required: false
+        default: '0'
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  CONTAINER_IMAGE: ghcr.io/zephyrproject-rtos/ci-repo-cache:v0.29.0.20260314
+
+jobs:
+  load-targets:
+    runs-on: ubuntu-22.04
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+
+      - name: Load target matrix
+        id: set-matrix
+        run: echo "matrix=$(jq -c '.' .github/membrowse-targets.json)" >> $GITHUB_OUTPUT
+
+  onboard:
+    needs: load-targets
+    runs-on: ubuntu-22.04
+    strategy:
+      fail-fast: false
+      matrix:
+        include: ${{ fromJson(needs.load-targets.outputs.matrix) }}
+
+    steps:
+      - name: Free disk space
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/apache/arrow/main/ci/scripts/util_free_space.sh | bash
+
+      - name: Checkout repository
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+
+      - name: Apply commit offset
+        if: ${{ github.event.inputs.commit_offset != '0' }}
+        run: git checkout HEAD~${{ github.event.inputs.commit_offset }}
+
+
+      - name: Install old Zephyr SDKs for historical builds
+        run: |
+          mkdir -p /opt/toolchains
+          for ver in 0.16.8 0.17.4; do
+            wget -q https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v${ver}/zephyr-sdk-${ver}_linux-x86_64_minimal.tar.xz
+            tar xf zephyr-sdk-${ver}_linux-x86_64_minimal.tar.xz -C /opt/toolchains
+            /opt/toolchains/zephyr-sdk-${ver}/setup.sh -h -c
+            for tc in arm-zephyr-eabi riscv64-zephyr-elf x86_64-zephyr-elf arc-zephyr-elf; do
+              /opt/toolchains/zephyr-sdk-${ver}/setup.sh -t ${tc}
+            done
+          done
+          # Create cmake package registry to mount into containers
+          # Includes host SDKs and the container's built-in SDK 1.0.0
+          mkdir -p /tmp/cmake-registry/Zephyr-sdk
+          for sdk in /opt/toolchains/zephyr-sdk-*/; do
+            ver=$(basename "$sdk" | sed 's/zephyr-sdk-//')
+            echo "${sdk}cmake" > "/tmp/cmake-registry/Zephyr-sdk/${ver}"
+          done
+          echo "/opt/toolchains/zephyr-sdk-1.0.0/cmake" > "/tmp/cmake-registry/Zephyr-sdk/1.0.0"
+
+      - name: Pull container image
+        run: |
+          for i in 1 2 3 4 5; do
+            docker pull ${{ env.CONTAINER_IMAGE }} && break
+            echo "Attempt $i failed, retrying in 30s..."
+            sleep 30
+          done
+
+      - name: Set up Python
+        uses: actions/setup-python@e797f83bcb11b83ae66e0230d6156d7c80228e7c # v6.0.0
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: scripts/requirements-actions.txt
+
+      - name: Install Python packages
+        run: pip install -r scripts/requirements-actions.txt --require-hashes
+
+      - name: Set up ccache
+        run: |
+          mkdir -p ${{ github.workspace }}/.ccache
+          echo "max_size = 10G" > ${{ github.workspace }}/.ccache/ccache.conf
+          echo "compression = true" >> ${{ github.workspace }}/.ccache/ccache.conf
+
+      - name: Restore ccache
+        uses: actions/cache@v4
+        with:
+          path: ${{ github.workspace }}/.ccache
+          key: ccache-${{ matrix.target_name }}-${{ github.sha }}
+          restore-keys: |
+            ccache-${{ matrix.target_name }}-
+
+      - name: Patch container module.yml files
+        run: |
+          mkdir -p /tmp/patched-modules
+          docker run --rm -v /tmp/patched-modules:/out ${{ env.CONTAINER_IMAGE }} \
+            bash -c 'cp -a /repo-cache/zephyrproject/modules/. /out/ && \
+              find /out -name module.yml -exec sed -i "/^  package-managers:/,/^  [^ ]/{/^  package-managers:/d;/^    /d;}" {} +'
+
+      - name: Run Membrowse Onboard Action
+        uses: membrowse/membrowse-action/onboard-action@v1
+        with:
+          target_name: ${{ matrix.target_name }}
+          num_commits: ${{ github.event.inputs.num_commits }}
+          commits: ${{ github.event.inputs.commits }}
+          build_script: |
+            docker run --rm \
+              -v ${{ github.workspace }}:/repo-cache/zephyrproject/zephyr \
+              -v ${{ github.workspace }}/.ccache:/ccache \
+              -v /tmp/patched-modules:/repo-cache/zephyrproject/modules:ro \
+              -v /opt/toolchains/zephyr-sdk-0.16.8:/opt/toolchains/zephyr-sdk-0.16.8 \
+              -v /opt/toolchains/zephyr-sdk-0.17.4:/opt/toolchains/zephyr-sdk-0.17.4 \
+              -v /tmp/cmake-registry/Zephyr-sdk:/root/.cmake/packages/Zephyr-sdk \
+              -w /repo-cache/zephyrproject/zephyr \
+              -e ZEPHYR_TOOLCHAIN_VARIANT=zephyr \
+              -e ZEPHYR_SDK_INSTALL_DIR=/opt/toolchains/zephyr-sdk-$(cat SDK_VERSION) \
+              -e ZEPHYR_BASE=/repo-cache/zephyrproject/zephyr \
+              -e CCACHE_DIR=/ccache \
+              -e USE_CCACHE=1 \
+              -e GIT_CONFIG_COUNT=1 \
+              -e GIT_CONFIG_KEY_0=safe.directory \
+              -e "GIT_CONFIG_VALUE_0=*" \
+              ${{ env.CONTAINER_IMAGE }} \
+              ${{ matrix.build_cmd }}
+          elf: ${{ matrix.elf }}
+          ld: ${{ matrix.ld }}
+          linker_vars: ${{ matrix.linker_vars }}
+          initial_commit: ${{ github.event.inputs.commits == '' && matrix.initial_commit || '' }}
+          api_key: ${{ secrets.MEMBROWSE_API_KEY }}
+          api_url: ${{ vars.MEMBROWSE_URL }}
+          binary_search: ${{ github.event.inputs.commits == '' }}
+
+      - name: Upload linker.cmd for debugging
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: linker-${{ matrix.target_name }}
+          path: ${{ matrix.ld }}
+          if-no-files-found: ignore
