@@ -123,7 +123,9 @@ jobs:
           mkdir -p /tmp/patched-modules
           docker run --rm -v /tmp/patched-modules:/out ${{ env.CONTAINER_IMAGE }} \
             bash -c 'cp -a /repo-cache/zephyrproject/modules/. /out/ && \
-              find /out -name module.yml -exec sed -i "/^  package-managers:/,/^  [^ ]/{/^  package-managers:/d;/^    /d;}" {} +'
+              find /out -name module.yml -exec sed -i \
+                -e "/^package-managers:/,/^[^ ]/{/^package-managers:/d;/^  /d;}" \
+                -e "/^  package-managers:/,/^  [^ ]/{/^  package-managers:/d;/^    /d;}" {} +'
 
       - name: Run Membrowse Onboard Action
         uses: membrowse/membrowse-action/onboard-action@v1
