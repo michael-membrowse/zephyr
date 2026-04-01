@@ -19,63 +19,6 @@
     ]
   },
   {
-    "target_name": "footprints-userspace-frdm_k64f",
-    "build_cmd": "west build -p -b frdm_k64f tests/benchmarks/footprints -d build/footprints-userspace-frdm_k64f -- -DCONF_FILE=prj_userspace.conf",
-    "elf": "build/footprints-userspace-frdm_k64f/zephyr/zephyr.elf",
-    "ld": "build/footprints-userspace-frdm_k64f/zephyr/linker.cmd",
-    "initial_commit": "98fb6e5f22549dc0bb3d71556fef47504a91e64f",
-    "repo_dirs": [
-      "tests/benchmarks/footprints",
-      "boards/nxp/frdm_k64f",
-      "soc/nxp/kinetis",
-      "arch/arm",
-      "kernel",
-      "include",
-      "lib",
-      "cmake",
-      "dts",
-      "drivers"
-    ]
-  },
-  {
-    "target_name": "footprints-default-disco_l475_iot1",
-    "build_cmd": "west build -p -b disco_l475_iot1 tests/benchmarks/footprints -d build/footprints-default-disco_l475_iot1",
-    "elf": "build/footprints-default-disco_l475_iot1/zephyr/zephyr.elf",
-    "ld": "build/footprints-default-disco_l475_iot1/zephyr/linker.cmd",
-    "initial_commit": "98fb6e5f22549dc0bb3d71556fef47504a91e64f",
-    "repo_dirs": [
-      "tests/benchmarks/footprints",
-      "boards/st/disco_l475_iot1",
-      "soc/st/stm32",
-      "arch/arm",
-      "kernel",
-      "include",
-      "lib",
-      "cmake",
-      "dts",
-      "drivers"
-    ]
-  },
-  {
-    "target_name": "footprints-userspace-disco_l475_iot1",
-    "build_cmd": "west build -p -b disco_l475_iot1 tests/benchmarks/footprints -d build/footprints-userspace-disco_l475_iot1 -- -DCONF_FILE=prj_userspace.conf",
-    "elf": "build/footprints-userspace-disco_l475_iot1/zephyr/zephyr.elf",
-    "ld": "build/footprints-userspace-disco_l475_iot1/zephyr/linker.cmd",
-    "initial_commit": "98fb6e5f22549dc0bb3d71556fef47504a91e64f",
-    "repo_dirs": [
-      "tests/benchmarks/footprints",
-      "boards/st/disco_l475_iot1",
-      "soc/st/stm32",
-      "arch/arm",
-      "kernel",
-      "include",
-      "lib",
-      "cmake",
-      "dts",
-      "drivers"
-    ]
-  },
-  {
     "target_name": "footprints-default-nrf5340dk_nrf5340_cpuapp",
     "build_cmd": "west build -p -b nrf5340dk/nrf5340/cpuapp tests/benchmarks/footprints -d build/footprints-default-nrf5340dk_nrf5340_cpuapp",
     "elf": "build/footprints-default-nrf5340dk_nrf5340_cpuapp/zephyr/zephyr.elf",
@@ -154,25 +97,6 @@
     ]
   },
   {
-    "target_name": "footprints-userspace-intel_ehl_crb",
-    "build_cmd": "west build -p -b intel_ehl_crb tests/benchmarks/footprints -d build/footprints-userspace-intel_ehl_crb -- -DCONF_FILE=prj_userspace.conf",
-    "elf": "build/footprints-userspace-intel_ehl_crb/zephyr/zephyr.elf",
-    "ld": "build/footprints-userspace-intel_ehl_crb/zephyr/linker.cmd",
-    "initial_commit": "7c70032d1f9c37fbfe5b9949a46adf2cce829562",
-    "repo_dirs": [
-      "tests/benchmarks/footprints",
-      "boards/intel/ehl",
-      "soc/intel/elkhart_lake",
-      "arch/x86",
-      "kernel",
-      "include",
-      "lib",
-      "cmake",
-      "dts",
-      "drivers"
-    ]
-  },
-  {
     "target_name": "footprints-power-management-frdm_k64f",
     "build_cmd": "west build -p -b frdm_k64f tests/benchmarks/footprints -d build/footprints-power-management-frdm_k64f -- -DCONF_FILE=prj_pm.conf",
     "elf": "build/footprints-power-management-frdm_k64f/zephyr/zephyr.elf",
@@ -182,26 +106,6 @@
       "tests/benchmarks/footprints",
       "boards/nxp/frdm_k64f",
       "soc/nxp/kinetis",
-      "arch/arm",
-      "subsys/pm",
-      "kernel",
-      "include",
-      "lib",
-      "cmake",
-      "dts",
-      "drivers"
-    ]
-  },
-  {
-    "target_name": "footprints-power-management-disco_l475_iot1",
-    "build_cmd": "west build -p -b disco_l475_iot1 tests/benchmarks/footprints -d build/footprints-power-management-disco_l475_iot1 -- -DCONF_FILE=prj_pm.conf",
-    "elf": "build/footprints-power-management-disco_l475_iot1/zephyr/zephyr.elf",
-    "ld": "build/footprints-power-management-disco_l475_iot1/zephyr/linker.cmd",
-    "initial_commit": "98fb6e5f22549dc0bb3d71556fef47504a91e64f",
-    "repo_dirs": [
-      "tests/benchmarks/footprints",
-      "boards/st/disco_l475_iot1",
-      "soc/st/stm32",
       "arch/arm",
       "subsys/pm",
       "kernel",
@@ -386,27 +290,6 @@
     "initial_commit": "acb9da2ba093e66e4b7049ff57d14fe2c309da54",
     "repo_dirs": [
       "samples/bluetooth/hap_ha",
-      "boards/nordic/nrf5340dk",
-      "soc/nordic/nrf53",
-      "soc/nordic/common",
-      "arch/arm",
-      "subsys/bluetooth",
-      "kernel",
-      "include",
-      "lib",
-      "cmake",
-      "dts",
-      "drivers"
-    ]
-  },
-  {
-    "target_name": "bt_bap_unicast_client-default-nrf5340dk_nrf5340_cpuapp",
-    "build_cmd": "west build -p -b nrf5340dk/nrf5340/cpuapp samples/bluetooth/bap_unicast_client -d build/bt_bap_unicast_client-default-nrf5340dk_nrf5340_cpuapp",
-    "elf": "build/bt_bap_unicast_client-default-nrf5340dk_nrf5340_cpuapp/zephyr/zephyr.elf",
-    "ld": "build/bt_bap_unicast_client-default-nrf5340dk_nrf5340_cpuapp/zephyr/linker.cmd",
-    "initial_commit": "1bcc3d8efa111616aff636af5bf2ae50d3fa28a7",
-    "repo_dirs": [
-      "samples/bluetooth/bap_unicast_client",
       "boards/nordic/nrf5340dk",
       "soc/nordic/nrf53",
       "soc/nordic/common",
