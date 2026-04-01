@@ -27,7 +27,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  CONTAINER_IMAGE: ghcr.io/zephyrproject-rtos/ci-repo-cache:v0.29.0.20260314
+  CONTAINER_IMAGE: ghcr.io/zephyrproject-rtos/ci-repo-cache:v0.29.1.20260327
 
 jobs:
   load-targets:
