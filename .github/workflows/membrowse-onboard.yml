@@ -125,7 +125,10 @@ jobs:
             bash -c 'cp -a /repo-cache/zephyrproject/modules/. /out/ && \
               find /out -name module.yml -exec sed -i \
                 -e "/^package-managers:/,/^[^ ]/{/^package-managers:/d;/^  /d;}" \
-                -e "/^  package-managers:/,/^  [^ ]/{/^  package-managers:/d;/^    /d;}" {} +'
+                -e "/^  package-managers:/,/^  [^ ]/{/^  package-managers:/d;/^    /d;}" \
+                -e "/^    kconfig-ext:/d" \
+                -e "/^  kconfig-ext:/d" \
+                -e "/^kconfig-ext:/d" {} +'
 
       - name: Run Membrowse Onboard Action
         uses: membrowse/membrowse-action/onboard-action@v1
