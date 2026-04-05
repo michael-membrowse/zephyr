@@ -69,7 +69,7 @@ jobs:
         run: git checkout HEAD~${{ github.event.inputs.commit_offset }}
 
       - name: Install Python requirements
-        run: /opt/install-requirements.sh ${{ github.workspace }}
+        run: sudo /opt/install-requirements.sh ${{ github.workspace }}
 
       - name: Set up ccache
         run: |
@@ -128,7 +128,7 @@ jobs:
         run: |
           CCACHE_BUCKET=$(curl -sf -H "Metadata-Flavor: Google" \
             http://metadata.google.internal/computeMetadata/v1/instance/attributes/ccache-bucket 2>/dev/null || echo "")
-          if [ -n "$CCACHE_BUCKET" ]; then
+          if [ -n "$CCACHE_BUCKET" ] && [ -d "${{ github.workspace }}/.ccache" ]; then
             tar -cf - -C ${{ github.workspace }}/.ccache . | zstd -3 | \
               gsutil cp - "gs://${CCACHE_BUCKET}/ccache-${{ matrix.target_name }}.tar.zst"
           fi

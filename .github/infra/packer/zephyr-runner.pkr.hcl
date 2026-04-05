@@ -25,7 +25,7 @@ source "googlecompute" "zephyr-runner" {
   image_family        = "zephyr-runner"
   image_description   = "GitHub Actions self-hosted runner for Zephyr membrowse onboarding"
   machine_type        = "c2-standard-8"
-  disk_size           = 100
+  disk_size           = 300
   disk_type           = "pd-ssd"
   ssh_username        = "packer"
 }

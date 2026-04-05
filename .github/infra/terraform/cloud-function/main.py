@@ -102,7 +102,7 @@ chmod +x /tmp/startup.sh
                 auto_delete=True,
                 initialize_params=compute_v1.AttachedDiskInitializeParams(
                     source_image=image_link,
-                    disk_size_gb=100,
+                    disk_size_gb=500,
                     disk_type=f"zones/{ZONE}/diskTypes/pd-ssd",
                 ),
             )

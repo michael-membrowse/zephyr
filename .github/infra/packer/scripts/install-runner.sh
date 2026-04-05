@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 
-RUNNER_VERSION="2.322.0"
+RUNNER_VERSION="2.333.1"
 RUNNER_ARCH="linux-x64"
 
 echo "Installing GitHub Actions runner v${RUNNER_VERSION}..."
