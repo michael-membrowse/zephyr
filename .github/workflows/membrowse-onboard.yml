@@ -18,6 +18,11 @@ on:
         required: false
         default: '0'
         type: string
+      use_gce:
+        description: 'Use GCE self-hosted runners'
+        required: false
+        default: true
+        type: boolean
 
 permissions:
   contents: read
@@ -42,7 +47,103 @@ jobs:
         id: set-matrix
         run: echo "matrix=$(jq -c '.' .github/membrowse-targets.json)" >> $GITHUB_OUTPUT
 
+  # --- GCE self-hosted runner path (fast, per-commit container selection) ---
+  onboard-gce:
+    if: ${{ github.event.inputs.use_gce == 'true' }}
+    needs: load-targets
+    runs-on: [self-hosted, zephyr-membrowse]
+    strategy:
+      fail-fast: false
+      matrix:
+        include: ${{ fromJson(needs.load-targets.outputs.matrix) }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+
+      - name: Apply commit offset
+        if: ${{ github.event.inputs.commit_offset != '0' }}
+        run: git checkout HEAD~${{ github.event.inputs.commit_offset }}
+
+      - name: Install Python requirements
+        run: /opt/install-requirements.sh ${{ github.workspace }}
+
+      - name: Set up ccache
+        run: |
+          mkdir -p ${{ github.workspace }}/.ccache
+          printf 'max_size = 10G\ncompression = true\n' > ${{ github.workspace }}/.ccache/ccache.conf
+          CCACHE_BUCKET=$(curl -sf -H "Metadata-Flavor: Google" \
+            http://metadata.google.internal/computeMetadata/v1/instance/attributes/ccache-bucket 2>/dev/null || echo "")
+          if [ -n "$CCACHE_BUCKET" ]; then
+            gsutil -q cp "gs://${CCACHE_BUCKET}/ccache-${{ matrix.target_name }}.tar.zst" /tmp/cc.tar.zst 2>/dev/null && \
+              zstd -d /tmp/cc.tar.zst -c | tar xf - -C ${{ github.workspace }}/.ccache || true
+          fi
+
+      - name: Run Membrowse Onboard Action
+        uses: membrowse/membrowse-action/onboard-action@v1
+        with:
+          target_name: ${{ matrix.target_name }}
+          num_commits: ${{ github.event.inputs.num_commits }}
+          commits: ${{ github.event.inputs.commits }}
+          build_script: |
+            # Select era-appropriate container based on SDK_VERSION
+            SDK_VER=$(cat SDK_VERSION 2>/dev/null || echo "0.16.8")
+            case "$SDK_VER" in
+              1.0.1)          IMG=ghcr.io/zephyrproject-rtos/ci-repo-cache:v0.29.1.20260327 ;;
+              1.0.0)          IMG=ghcr.io/zephyrproject-rtos/ci-repo-cache:v0.29.0.20260314 ;;
+              0.17.4)         IMG=ghcr.io/zephyrproject-rtos/ci-repo-cache:v0.28.7.20251127 ;;
+              0.17.2)         IMG=ghcr.io/zephyrproject-rtos/ci-repo-cache:v0.28.1.20250624 ;;
+              0.17.1)         IMG=ghcr.io/zephyrproject-rtos/ci-repo-cache:v0.28.0.20250523 ;;
+              0.17.0|0.16.9)  IMG=ghcr.io/zephyrproject-rtos/ci-repo-cache:v0.27.4.20241026 ;;
+              0.16.8)         IMG=ghcr.io/zephyrproject-rtos/ci-repo-cache:v0.26.14.20240823 ;;
+              0.16.5*)        IMG=ghcr.io/zephyrproject-rtos/ci-repo-cache:v0.26.9.20240223 ;;
+              *)              IMG=ghcr.io/zephyrproject-rtos/ci-repo-cache:v0.29.1.20260327 ;;
+            esac
+            docker run --rm \
+              -v ${{ github.workspace }}:/repo-cache/zephyrproject/zephyr \
+              -v ${{ github.workspace }}/.ccache:/ccache \
+              -w /repo-cache/zephyrproject/zephyr \
+              -e ZEPHYR_TOOLCHAIN_VARIANT=zephyr \
+              -e ZEPHYR_BASE=/repo-cache/zephyrproject/zephyr \
+              -e CCACHE_DIR=/ccache \
+              -e USE_CCACHE=1 \
+              -e GIT_CONFIG_COUNT=1 \
+              -e GIT_CONFIG_KEY_0=safe.directory \
+              -e "GIT_CONFIG_VALUE_0=*" \
+              "$IMG" \
+              ${{ matrix.build_cmd }}
+          elf: ${{ matrix.elf }}
+          ld: ${{ matrix.ld }}
+          linker_vars: ${{ matrix.linker_vars }}
+          initial_commit: ${{ github.event.inputs.commits == '' && matrix.initial_commit || '' }}
+          api_key: ${{ secrets.MEMBROWSE_API_KEY }}
+          api_url: ${{ vars.MEMBROWSE_URL }}
+          binary_search: ${{ github.event.inputs.commits == '' }}
+
+      - name: Save ccache to GCS
+        if: always()
+        run: |
+          CCACHE_BUCKET=$(curl -sf -H "Metadata-Flavor: Google" \
+            http://metadata.google.internal/computeMetadata/v1/instance/attributes/ccache-bucket 2>/dev/null || echo "")
+          if [ -n "$CCACHE_BUCKET" ]; then
+            tar -cf - -C ${{ github.workspace }}/.ccache . | zstd -3 | \
+              gsutil cp - "gs://${CCACHE_BUCKET}/ccache-${{ matrix.target_name }}.tar.zst"
+          fi
+
+      - name: Upload linker.cmd for debugging
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: linker-${{ matrix.target_name }}
+          path: ${{ matrix.ld }}
+          if-no-files-found: ignore
+
+  # --- GitHub-hosted runner path (fallback) ---
   onboard:
+    if: ${{ github.event.inputs.use_gce != 'true' }}
     needs: load-targets
     runs-on: ubuntu-22.04
     strategy:
@@ -65,7 +166,6 @@ jobs:
         if: ${{ github.event.inputs.commit_offset != '0' }}
         run: git checkout HEAD~${{ github.event.inputs.commit_offset }}
 
-
       - name: Install old Zephyr SDKs for historical builds
         run: |
           mkdir -p /opt/toolchains
@@ -77,8 +177,6 @@ jobs:
               /opt/toolchains/zephyr-sdk-${ver}/setup.sh -t ${tc}
             done
           done
-          # Create cmake package registry to mount into containers
-          # Includes host SDKs and the container's built-in SDK 1.0.0
           mkdir -p /tmp/cmake-registry/Zephyr-sdk
           for sdk in /opt/toolchains/zephyr-sdk-*/; do
             ver=$(basename "$sdk" | sed 's/zephyr-sdk-//')
