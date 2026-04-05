@@ -68,9 +68,6 @@ jobs:
         if: ${{ github.event.inputs.commit_offset != '0' }}
         run: git checkout HEAD~${{ github.event.inputs.commit_offset }}
 
-      - name: Install Python requirements
-        run: sudo /opt/install-requirements.sh ${{ github.workspace }}
-
       - name: Set up ccache
         run: |
           mkdir -p ${{ github.workspace }}/.ccache
